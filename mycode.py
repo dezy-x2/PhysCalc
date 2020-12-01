@@ -282,7 +282,30 @@ def potElasticEquation(ue=f_f, k=f_f, x=f_f, np=False):
     else:
         return answer
 
+def circularEquation(s=f_f, d=f_f, t=f_f, np=False):
+    pi = 3.14
+    if s == f_f:
+        answer = (2 * pi * float(d)) / float(t)
+    elif d == f_f:
+        answer = (float(s)*float(t)) / (2 * pi)
+    elif t == f_f:
+        answer = (float(d) * pi * 2) / float(s)
+    if not np:
+        return print(answer)
+    else:
+        return answer
+
 # TESTERS ===================================================================================================================================================
+def testCircularEquation():
+    s = circularEquation(d=0.25, t=1, np=True)
+    d = circularEquation(s=1.57, t=1, np=True)
+    t = circularEquation(s=0.785, d=0.25, np=True)
+    if s == 1.57 and d == 0.25 and t == 2:#needs to be changed to 2
+        diagnostics = True
+    else:
+        diagnostics = False
+    return diagnostics
+
 def testPotGravEquation():
     ug = potGravEquation(m=2, g=2, h=2, np=True)
     m = potGravEquation(ug=2, g=2, h=2, np=True)
@@ -459,7 +482,7 @@ def testKinematicNoT():
 
 def runDiagnostics():
     diagnosticResults = ""
-    if testPotGravEquation() and testPotElasticEquation() and testWorkKineticEquation() and testKineticEnergyEquation() and testWorkEquation() and testGetForce() and testGetResultant() and testKinematicNoA() and testKinematicNoD() and testKinematicNoT() and testKinematicNoVf() and testImpulseEquation() and testMomentumEquation() and testFindTheta() and testImpulseMomentumEquation() and testConservationOfMomentumE() and testConservationOfMomentumI():
+    if testPotGravEquation() and testPotElasticEquation() and testWorkKineticEquation() and testKineticEnergyEquation() and testWorkEquation() and testGetForce() and testGetResultant() and testKinematicNoA() and testKinematicNoD() and testKinematicNoT() and testKinematicNoVf() and testImpulseEquation() and testMomentumEquation() and testFindTheta() and testImpulseMomentumEquation() and testConservationOfMomentumE() and testConservationOfMomentumI() and testCircularEquation():
         diagnosticResults += "All good here"
     if not testGetForce():
         diagnosticResults += "getForce is malfuctioning "
@@ -495,6 +518,8 @@ def runDiagnostics():
         diagnosticResults += "potElasticEquation is malfuctioning "
     if not testPotGravEquation():
         diagnosticResults += "potGravEquation is malfuctioning "
+    if not testCircularEquation():
+        diagnosticResults += "circularEquation is malfuctioning "
 
     return print(diagnosticResults)
 
@@ -640,6 +665,12 @@ def whatEquation():
         k = input("What is the k value? ")
         x = input("What is the x value? ")
         potElasticEquation(ue=ue, k=k, x=x)
+    elif choice == "circularEquation":
+        print("PLEASE ENTER False FOR WHAT YOU ARE SOLVING FOR")
+        s = input("What is the speed? ")
+        r = input("What is the radius? ")
+        t = input("What is the period? ")
+        circularEquation(s=s, d=r, t=t)
     else:
         print("Sorry that is not currently a valid equation. If you think it should be, feel free to make your own physics calculator from scratch")
 
