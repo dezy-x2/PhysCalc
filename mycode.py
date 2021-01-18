@@ -1,13 +1,19 @@
+#had to use false as a str to get around null rules
 f_f = "False"
 
+#gets a resultant (its pretty much just Pythagorean Theorum)
 def getResultant(vel1, vel2, np=False):
+    #a^2 + b^2 = c^2
     answer = ((int(vel1)**2)+(int(vel2)**2))**0.5
+    #These lines show up in every other equation np is noPrint and is used for the diagnostics
     if np == False:
         return print(answer)
     else:
         return answer
 
+#this is the force equation just F=ma where: F=force, m=mass, a=acceleration
 def getForce(f=f_f, m=f_f, a=f_f, np=False):
+    #it checks to see if one of the args is set to "False" for substitution
     if f == f_f:
         answer = float(m)*float(a)
     elif m == f_f:
@@ -19,6 +25,11 @@ def getForce(f=f_f, m=f_f, a=f_f, np=False):
     else:
         return answer
 
+#Kinematic equations are a set of equations with 5 potential vars being: vf=Velocity final, vi=Velocity initial,
+#a=Acceleration, t=Time, d=Distance
+#There are four diferent equations each one missing one of the variable and that is how they are name with KinematicNo<var>
+
+#This is the kinematic equation without distance: vf = vi + a * t
 def kinematicNoD(vf=f_f, vi=f_f, a=f_f, t=f_f, np=False):
     if vf == f_f:
         answer = float(vi) + (float(a)*float(t))
@@ -27,6 +38,7 @@ def kinematicNoD(vf=f_f, vi=f_f, a=f_f, t=f_f, np=False):
     elif a == f_f:
         answer = (float(vf) - float(vi))/float(t)
     elif t == f_f:
+        #this part just makes sure that you don't use the wrong equation and try zero division
         if int(a) == 0:
             answer = "That is zero division and therefore impossible"
         else:
@@ -36,6 +48,7 @@ def kinematicNoD(vf=f_f, vi=f_f, a=f_f, t=f_f, np=False):
     else:
         return answer
 
+#kinematic equation without acceleration: d = (vi + vf) / 2 * t
 def kinematicNoA(d=f_f, vi=f_f, vf=f_f, t=f_f, np=False):
     if d == f_f:
         answer = ((float(vi)+float(vf))/2)*float(t)
@@ -50,16 +63,21 @@ def kinematicNoA(d=f_f, vi=f_f, vf=f_f, t=f_f, np=False):
     else:
         return answer
 
+#kinematic equation without final velocity: d = vi * t + 1/2 * a * t^2
 def kinematicNoVf(d=f_f, vi=f_f, t=f_f, a=f_f, np=False):
     if d == f_f:
         answer = (float(vi)*float(t)) + 0.5*float(a)*(float(t)**2)
     elif vi == f_f:
         answer = (float(d)/float(t))-(0.5*float(a)*(float(t)**2))
     elif t == f_f:
+        #if the wrong numbers are fed in its very easy to get an imaginary number
         potential = ((-float(vi))+(((float(vi)**2)-(4*(0.5*float(a))*(-float(d))))**0.5))/(2*(0.5*float(a)))
+        #python imaginary numbers us "j" so if it has j in it it means it imaginary
         if "j" in str(potential):
+            #this is an error message 
             answer = "You gave me the wrong number so now you must die (plz check your data)"
         elif potential < 0:
+            #since the quadratic formula has two potential symobls (±) if it is less that zero the sign has to be changed
             answer = ((-float(vi))-(((float(vi)**2)-(4*(0.5*float(a))*(-float(d))))**0.5))/(2*(0.5*float(a)))
         else:
             answer = potential
@@ -71,6 +89,7 @@ def kinematicNoVf(d=f_f, vi=f_f, t=f_f, a=f_f, np=False):
     else:
         return answer
 
+#kinematic equation without time: vf^2 = vi^2 + 2 * a * d
 def kinematicNoT(vf=f_f, vi=f_f, a=f_f, d=f_f, np=False):
     if vf == f_f and vi != f_f and a != f_f and d != f_f:
         answer = ((float(vi)**2)+ 2*float(a)*float(d))**0.5
@@ -84,9 +103,13 @@ def kinematicNoT(vf=f_f, vi=f_f, a=f_f, d=f_f, np=False):
         return print(answer)
     else:
         return answer
- 
+
+#this equation is specifically for filling in a projectile chart based on given information it just uses the kinematic equations but slightly adjusted
+#variable are: Vx=Velocity on the x axis, dx=Distance on the x axis, t=Time, vfy=Velocity final on the y axis, dy=Distance on the y axis
 def fillInChart(Vx=f_f, dx=f_f, t=f_f, vfy=f_f, dy=f_f):
+    #velocity initial on the y axis
     viy = 0
+    #acceleration on the y axis
     ay = -10
     if not dy == f_f and not dx == f_f:
         t = ((-float(viy))-(((float(viy)**2)-(4*(0.5*float(ay))*(-float(dy))))**0.5))/(2*(0.5*float(ay)))
@@ -125,6 +148,8 @@ def fillInChart(Vx=f_f, dx=f_f, t=f_f, vfy=f_f, dy=f_f):
         answer = print("The final velocity along the y axis is " +str(vfy * -1)+ " the time is " +str((t**2)**0.5)+ " the distance along the x axis is " +str((dx **2)**0.5))
     return answer
 
+#impulse equation: j = f * t
+#j = impulse, f = force, t = time
 def impulseEquation(j=f_f, f=f_f, t=f_f, np=False):
     if j == f_f:
         answer = float(f) * float(t)
@@ -137,6 +162,8 @@ def impulseEquation(j=f_f, f=f_f, t=f_f, np=False):
     else:
         return answer
 
+#momentum equation: p = m * v
+#p=Momentum, m=Mass, vi=Velocity initial (typically zero but is adjustable), vf=Velocity final
 def momentumEquation(p=f_f, m=f_f, vi=0, vf=f_f, np=False):
     if p == f_f:
         answer = float(m) * (float(vf) - float(vi))
@@ -149,6 +176,8 @@ def momentumEquation(p=f_f, m=f_f, vi=0, vf=f_f, np=False):
     else:
         return answer
 
+#this combines both of those: f * t = m * ∆v
+#f = force, t=Time, m=Mass, ∆v = change in velocity
 def impulseMomentumEquation(f=f_f, t=f_f, m=f_f, vi=0, vf=f_f, np=False):
     if f == f_f:
         answer = (float(m)*(float(vf) - float(vi)))/float(t)
@@ -163,7 +192,11 @@ def impulseMomentumEquation(f=f_f, t=f_f, m=f_f, vi=0, vf=f_f, np=False):
     else:
         return answer
 
+#this one finds the arctan of an angle
+#the equation is really complicated so you should probably look up the taylor series
+#it is not fully acurate if you get within a 100th of 1 admitedly but it still works
 def findTheta(opp, adj, np=False):
+    #this is pi
     pi = 3.1415926535897932384626433832795028841971693993751058209749445923078164062862089986280348253421170679
     newvar = 0
     n = 0
@@ -190,6 +223,8 @@ def findTheta(opp, adj, np=False):
         else:
             return newvar
 
+#conservation of momentum elastic: m1 * vi1 + m2 * vi2 = m1 * vf1 + m2 * vf2
+#m1 = mass one, m2 = mass two, vi1=Velocity inital one, vi2=Velocity initial two, vf1=Velocity final one, vf2 = Velocity final two
 def conservationOfMomentumE(m1, m2, v1i=f_f, v2i=f_f, v1f=f_f, v2f=f_f, np=False):
     if v2f == f_f:
         answer = (((float(m1)*float(v1i))+(float(m2)*float(v2i)))-(float(m1)*float(v1f)))/ float(m2)
@@ -204,6 +239,8 @@ def conservationOfMomentumE(m1, m2, v1i=f_f, v2i=f_f, v1f=f_f, v2f=f_f, np=False
     else:
         return answer
 
+#conservation of momentum INelastic: m1 * vi1 + m2 * vi2 = vf(m1 + m2)
+#its vf=Velocity final because in an inelastic equation they stick together and have the same final speed
 def conservationOfMomentumI(m1, m2, v1i=f_f, v2i=f_f, vf=f_f, np=False):
     if vf == f_f:
         answer = ((float(m1)*float(v1i)+(float(m2)*float(v2i)))) / ((float(m1) + float(m2)))
@@ -216,6 +253,8 @@ def conservationOfMomentumI(m1, m2, v1i=f_f, v2i=f_f, vf=f_f, np=False):
     else:
         return answer
 
+#calculates work: W = F * d
+#w=Work, f=Force, d=distance
 def workEquation(w=f_f, f=f_f, d=f_f, np=False):
     if w == f_f:
         answer = float(f) * float(d)
@@ -228,6 +267,8 @@ def workEquation(w=f_f, f=f_f, d=f_f, np=False):
     else:
         return answer
 
+#finds kinetic energy: K = 1/2 * m * v^2
+#ke = Kinetic Engergy, m=Mass, #velocity
 def kineticEnergyEquation(ke=f_f, m=f_f, v=f_f, np=False):
     if ke == f_f:
         answer = (0.5 * float(m)) * (float(v)**2)
@@ -240,6 +281,7 @@ def kineticEnergyEquation(ke=f_f, m=f_f, v=f_f, np=False):
     else:
         return answer
 
+#combines the previous two: f * d = (vi - vf) * (m * 0.5)
 def workKineticEquation(f=f_f, d=f_f, m=f_f, vf=f_f, vi=0, np=False):
     if f == f_f:
         answer = (((float(vf) - float(vi))**2) * (float(m) * 0.5)) / float(d)
@@ -256,6 +298,8 @@ def workKineticEquation(f=f_f, d=f_f, m=f_f, vf=f_f, vi=0, np=False):
     else:
         return answer
 
+#potential gavitational energy: ug = m * g * h
+#ug=Potential gravitational energy, m=Mass, g=gravitational acceleration, h=height/distance
 def potGravEquation(ug=f_f, m=f_f, g=f_f, h=f_f, np=False):
     if ug == f_f:
         answer = float(m) * float(g) * float(h)
@@ -270,6 +314,8 @@ def potGravEquation(ug=f_f, m=f_f, g=f_f, h=f_f, np=False):
     else:
         return answer
 
+#potetial elastic energy: ue = 1/2 * k * x^2
+#ue=Potential elastic energy, k=spring constant, x=length stretched/compressed
 def potElasticEquation(ue=f_f, k=f_f, x=f_f, np=False):
     if ue == f_f:
         answer = (float(k) * 0.5) * (float(x)**2)
@@ -282,6 +328,8 @@ def potElasticEquation(ue=f_f, k=f_f, x=f_f, np=False):
     else:
         return answer
 
+#speed of circle equation: s = (2 * pi * d) / t
+#s=Speed, d=distance, t=Time
 def circularEquation(s=f_f, d=f_f, t=f_f, np=False):
     pi = 3.14
     if s == f_f:
@@ -296,11 +344,13 @@ def circularEquation(s=f_f, d=f_f, t=f_f, np=False):
         return answer
 
 # TESTERS ===================================================================================================================================================
+#all of these run diagnostics on the equations by testing for certian vars and ensuring that they are what they should be
+#the smaller equations can be run to narrow down problems and the larger "runDiagnostics" function will tell you roughly where they are 
 def testCircularEquation():
     s = circularEquation(d=0.25, t=1, np=True)
     d = circularEquation(s=1.57, t=1, np=True)
     t = circularEquation(s=0.785, d=0.25, np=True)
-    if s == 1.57 and d == 0.25 and t == 2:#needs to be changed to 2
+    if s == 1.57 and d == 0.25 and t == 2:
         diagnostics = True
     else:
         diagnostics = False
@@ -480,6 +530,7 @@ def testKinematicNoT():
         diagnostic = False
     return diagnostic
 
+#this will tell you an overall result if anything isn't working
 def runDiagnostics():
     diagnosticResults = ""
     if testPotGravEquation() and testPotElasticEquation() and testWorkKineticEquation() and testKineticEnergyEquation() and testWorkEquation() and testGetForce() and testGetResultant() and testKinematicNoA() and testKinematicNoD() and testKinematicNoT() and testKinematicNoVf() and testImpulseEquation() and testMomentumEquation() and testFindTheta() and testImpulseMomentumEquation() and testConservationOfMomentumE() and testConservationOfMomentumI() and testCircularEquation():
@@ -526,6 +577,7 @@ def runDiagnostics():
 
 
 # WHAT EQUATION =============================================================================================================================================
+#this allows it to be usable from the terminal and makes it more user friendly
 def whatEquation():
     choice = input("Which equation do you need? ")
     if choice == "getForce":
@@ -674,9 +726,10 @@ def whatEquation():
     else:
         print("Sorry that is not currently a valid equation. If you think it should be, feel free to make your own physics calculator from scratch")
 
-
+#this is just called by default
 whatEquation()
 
+#hope you enjoyed the tour!
 
 
 
@@ -717,6 +770,3 @@ whatEquation()
 
 
 
-
-
-#lol
